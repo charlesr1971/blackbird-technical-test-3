@@ -13,13 +13,11 @@ let wdth;
 let hght;
 
 function setup() {
-  createCanvas(400, 400);
-  wdth = width / 3;
+  createCanvas(400, 400); // call library
+  // width is a library property
+  wdth = width / 3; 
+  // height is a library property
   hght = height / 3;
-}
-
-function matches(x, y, z) {
-  return x == y && y == z && x != ' ';
 }
 
 
@@ -118,11 +116,17 @@ function mousePressed() { // library uses this method to detect mouse click even
   if (thePlayer == player1) {
     if (tictactoeCanvas[x][y] == ' ') {
       tictactoeCanvas[x][y] = player1;
+	  thePlayer = player2;
     }
   } 
   else if (thePlayer == player2) {
     if (tictactoeCanvas[x][y] == ' ') {
       tictactoeCanvas[x][y] = player2;
+	  thePlayer = player1;
     }
   }
+}
+
+function matches(x, y, z) { // check three squares for a win
+  return x == y && y == z && x != ' ';
 }
