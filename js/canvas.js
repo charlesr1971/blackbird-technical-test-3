@@ -9,17 +9,17 @@ let tictactoeCanvas = [
   [' ', ' ', ' ']
 ];
 
-let w;
-let h;
+let wdth;
+let hght;
 
 function setup() {
   createCanvas(400, 400);
-  w = width / 3;
-  h = height / 3;
+  wdth = width / 3;
+  hght = height / 3;
 }
 
-function matches(a, b, c) {
-  return a == b && b == c && a != ' ';
+function matches(x, y, z) {
+  return x == y && y == z && x != ' ';
 }
 
 
@@ -29,18 +29,18 @@ function draw() { // library uses this method to render can
 
   stroke(255, 204, 0);
   strokeWeight(4);
-  line(w, 0, w, height); // call library
-  line(w * 2, 0, w * 2, height);
-  line(0, h, width, h);
-  line(0, h * 2, width, h * 2);
+  line(wdth, 0, wdth, height); // call library
+  line(wdth * 2, 0, wdth * 2, height);
+  line(0, hght, width, hght);
+  line(0, hght * 2, width, hght * 2);
 
   for (let j = 0; j < 3; j++) {
     for (let i = 0; i < 3; i++) {
-      let x = w * i + w / 2;
-      let y = h * j + h / 2;
+      let x = wdth * i + wdth / 2;
+      let y = hght * j + hght / 2;
       let shape = tictactoeCanvas[i][j];
       textSize(28);
-      let r = w / 4;
+      let r = wdth / 4;
       if (shape == player1) {
         noFill(); // call library
 		stroke(0, 0, 0);
@@ -60,7 +60,7 @@ function draw() { // library uses this method to render can
   if (outcome != null) {
     noLoop(); // call library
     let outcomeP = createP(''); // call DOM library
-    if (outcome == 'draw') {
+    if (outcome == 'match') {
       outcomeP.html('No one wins!');
     }
 	else{
@@ -74,15 +74,15 @@ function resultCheck() {
   let victor = null;
 
   
-  for (let i = 0; i < 3; i++) {
-    if (matches(tictactoeCanvas[i][0], tictactoeCanvas[i][1], tictactoeCanvas[i][2])) {
-      victor = tictactoeCanvas[i][0];
+  for (var a = 0; a < 3; a++) {
+    if (matches(tictactoeCanvas[a][0], tictactoeCanvas[a][1], tictactoeCanvas[a][2])) {
+      victor = tictactoeCanvas[a][0];
     }
   }
 
-  for (let i = 0; i < 3; i++) {
-    if (matches(tictactoeCanvas[0][i], tictactoeCanvas[1][i], tictactoeCanvas[2][i])) {
-      victor = tictactoeCanvas[0][i];
+  for (var a = 0; a < 3; a++) {
+    if (matches(tictactoeCanvas[0][a], tictactoeCanvas[1][a], tictactoeCanvas[2][a])) {
+      victor = tictactoeCanvas[0][a];
     }
   }
 
@@ -94,16 +94,16 @@ function resultCheck() {
   }
   
   let emptySquares = 0;
-  for (let i = 0; i < 3; i++) {
+  for (var a = 0; a < 3; a++) {
     for (let j = 0; j < 3; j++) {
-      if (tictactoeCanvas[i][j] == ' ') {
+      if (tictactoeCanvas[a][j] == ' ') {
         emptySquares++;
       }
     }
   }
 
   if (victor == null && emptySquares == 0) {
-    return 'draw';
+    return 'match';
   }
   else {
     return victor;
@@ -112,8 +112,8 @@ function resultCheck() {
 }
 
 function mousePressed() { // library uses this method to detect mouse click event handler
-  let x = floor(mouseX / w);
-  let y = floor(mouseY / h);
+  let x = floor(mouseX / wdth);
+  let y = floor(mouseY / hght);
   if (thePlayer == player1) {
     if (tictactoeCanvas[x][y] == ' ') {
       tictactoeCanvas[x][y] = player1;
