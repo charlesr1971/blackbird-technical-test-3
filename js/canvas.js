@@ -34,37 +34,38 @@ function draw() { // library uses this method to render can
   line(0, hght, width, hght);
   line(0, hght * 2, width, hght * 2);
 
-  for (let j = 0; j < 3; j++) {
-    for (let i = 0; i < 3; i++) {
-      let x = wdth * i + wdth / 2;
-      let y = hght * j + hght / 2;
-      let shape = tictactoeCanvas[i][j];
+  for (var a = 0; a < 3; a++) {
+    for (var b = 0; b < 3; b++) {
+      let x = wdth * b + wdth / 2;
+      let y = hght * a + hght / 2;
+      let shape = tictactoeCanvas[b][a];
+	  let radius = wdth / 4;
       textSize(28);
-      let r = wdth / 4;
       if (shape == player1) {
         noFill(); // call library
 		stroke(0, 0, 0);
 		strokeWeight(4);
-        ellipse(x, y, r * 2); // call library
+        ellipse(x, y, radius * 2); // call library: create nought
       }
 	  else if (shape == player2) {
 		stroke(255, 0, 0);
 		strokeWeight(4);
-        line(x - r, y - r, x + r, y + r);
-        line(x + r, y - r, x - r, y + r);
+        line(x - radius, y - radius, x + radius, y + radius); // create part of cross
+        line(x + radius, y - radius, x - radius, y + radius); // create part of cross
       }
     }
   }
 
   let outcome = resultCheck(); // lets check the results
-  if (outcome != null) {
+  if (outcome != null) { // if the outcome is not null, lets create a response
     noLoop(); // call library
-    let outcomeP = createP(''); // call DOM library
+    let paragraph = createP(''); // call DOM library
+	paragraph.style('font-size', '28px');
     if (outcome == 'match') {
-      outcomeP.html('No one wins!');
+      paragraph.html('No one wins! Booooooo!');
     }
 	else{
-      outcomeP.html(`${outcome} is the winner!`);
+      paragraph.html(`${outcome} is the winner! Hooooooray!`);
     }
   }
 }
@@ -95,14 +96,14 @@ function resultCheck() {
   
   let emptySquares = 0;
   for (var a = 0; a < 3; a++) {
-    for (let j = 0; j < 3; j++) {
-      if (tictactoeCanvas[a][j] == ' ') {
+    for (var b = 0; b < 3; b++) {
+      if (tictactoeCanvas[a][b] == ' ') {
         emptySquares++;
       }
     }
   }
 
-  if (victor == null && emptySquares == 0) {
+  if (victor == null && emptySquares == 0) { // check to see if there are no more empty squares left
     return 'match';
   }
   else {
